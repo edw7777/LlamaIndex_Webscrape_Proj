@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecture Notes App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    input[type="file"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .response {
+      margin-top: 20px;
+      background: #e9ecef;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Lecture Notes App</h1>
+
+    <!-- File Upload Section -->
+    <div class="input-group">
+      <label for="fileUpload">Upload a file</label>
+      <input type="file" id="fileUpload">
+      <button onclick="uploadFile()">Upload</button>
+    </div>
+
+    <!-- HTML Input for Website URL -->
+    <div class="input-group">
+      <label for="websiteInput">Enter Website URL:</label>
+      <input type="text" id="websiteInput" placeholder="https://example.com">
+      <button onclick="scrapeWebsite()">Scrape Website</button>
+    </div>
+
+    <div class="input-group">
+      <label for="queryInput">Ask a Question:</label>
+      <input type="text" id="queryInput" placeholder="What are the main topics?">
+      <button onclick="submitQuery()">Query</button>
+    </div>
+
+    <div class="response" id="response"></div>
+
+    <button id="logoutButton">Logout</button>
+
+  </div>
+
+  <script>
+    const API_BASE_URL = "http://127.0.0.1:8000";
+
+    // Check if the user is logged in
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in.");
+      window.location.href = "index.html"; // Redirect to login page
+    }
+
+    // Handle logout
+    document.getElementById("logoutButton").addEventListener("click", () => {
+      localStorage.removeItem("token");
+      window.location.href = "index.html"; // Redirect to login page
+    });
+
+    // Function to handle file uploads
+    async function uploadFile() {
+      const fileInput = document.getElementById("fileUpload");
+      if (!fileInput.files.length) {
+        alert("Please select a file.");
+        return;
+      }
+
+      const formData = new FormData(); // Corrected variable name
+      formData.append("file", fileInput.files[0]);
+
+      const response = await fetch(`${API_BASE_URL}/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      const result = await response.json();
+      alert(result.message || "Upload failed.");
+    }
+
+    // Function to scrape website
+    async function scrapeWebsite() {
+      const websiteInput = document.getElementById("websiteInput").value; // Corrected `.value()`
+      if (!websiteInput) {
+        alert("Please enter a website URL.");
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/scrape`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: websiteInput }),
+      });
+      const result = await response.json();
+      alert(result.message || "Scraping failed.");
+    }
+
+    // Function to submit query
+    async function submitQuery() {
+      const queryInput = document.getElementById("queryInput").value;
+      if (!queryInput) {
+        alert("Please enter a question.");
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/query`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: queryInput }),
+      });
+      const result = await response.json();
+      document.getElementById("response").innerText = result.response || "Query failed.";
+    }
+  </script>
+</body>
+
+</html>

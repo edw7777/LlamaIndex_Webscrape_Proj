@@ -1,0 +1,5 @@
+requirements
+pip install pytube
+pip install python-multipart
+pip install boto3
+pip install fastapi

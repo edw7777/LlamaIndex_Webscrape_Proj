@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login or Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 300px;
+      margin: 0 auto;
+      padding-top: 50px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <div class="input-group">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" required>
+    </div>
+    <div class="input-group">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" required>
+    </div>
+    <button onclick="login()">Login</button>
+
+    <h2>Register</h2>
+    <div class="input-group">
+      <label for="registerEmail">Email</label>
+      <input type="email" id="registerEmail" required>
+    </div>
+    <div class="input-group">
+      <label for="registerPassword">Password</label>
+      <input type="password" id="registerPassword" required>
+    </div>
+    <button onclick="register()">Register</button>
+
+    <p class="error" id="errorMessage"></p>
+  </div>
+
+  <script>
+    const API_BASE_URL = "http://127.0.0.1:8000"; // Your FastAPI server
+
+    // Handle login
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      const response = await fetch(`${API_BASE_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        localStorage.setItem("token", result.access_token);  // Save token in localStorage
+        window.location.href = "main.html";  // Redirect to main page
+      } else {
+        alert(result.detail);
+      }
+    });
+
+    // Handle registration
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+
+      const response = await fetch(`${API_BASE_URL}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert("Registration successful! Please log in.");
+      } else {
+        alert(result.detail);
+      }
+    });
+  </script>
+</body>
+
+</html>
