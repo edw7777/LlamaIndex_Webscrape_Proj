@@ -98,14 +98,8 @@
     const token = localStorage.getItem("token");
     if (!token) {
       alert("Please log in.");
-      window.location.href = "index.html"; // Redirect to login page
+      window.location.href = "login.html"; // Redirect to login page
     }
-
-    // Handle logout
-    document.getElementById("logoutButton").addEventListener("click", () => {
-      localStorage.removeItem("token");
-      window.location.href = "index.html"; // Redirect to login page
-    });
 
     // Function to handle file uploads
     async function uploadFile() {
@@ -159,6 +153,12 @@
       const result = await response.json();
       document.getElementById("response").innerText = result.response || "Query failed.";
     }
+
+    //logout script
+    document.getElementById("logoutButton").addEventListener("click", () => {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    });
   </script>
 </body>
 

@@ -41,8 +41,8 @@ async def some_function_to_load_index(new_index):
     current_loaded_index = new_index
 
 #AWS persist
-AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_ACCESS_KEY = os.getenv("ACCESS_KEY_ID")
+AWS_SECRET_KEY = os.getenv("SECRET_ACCESS_KEY")
 S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
 S3_FOLDER = os.getenv("S3_FOLDER")
 REGION = os.getenv("REGION")

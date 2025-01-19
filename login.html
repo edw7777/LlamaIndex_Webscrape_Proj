@@ -68,6 +68,8 @@
     <button onclick="register()">Register</button>
 
     <p class="error" id="errorMessage"></p>
+
+    <button id="logoutButton">Logout</button>
   </div>
 
   <script>
@@ -90,7 +92,7 @@
         localStorage.setItem("token", result.access_token);  // Save token in localStorage
         window.location.href = "main.html";  // Redirect to main page
       } else {
-        alert(result.detail);
+        alert(result.detail || "Login Failed");
       }
     });
 
