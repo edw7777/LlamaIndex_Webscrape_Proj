@@ -54,7 +54,7 @@
       <label for="loginPassword">Password</label>
       <input type="password" id="loginPassword" required>
     </div>
-    <button onclick="login()">Login</button>
+    <button id="loginButton">Login</button>
 
     <h2>Register</h2>
     <div class="input-group">
@@ -65,7 +65,7 @@
       <label for="registerPassword">Password</label>
       <input type="password" id="registerPassword" required>
     </div>
-    <button onclick="register()">Register</button>
+    <button id="registerButton">Register</button>
 
     <p class="error" id="errorMessage"></p>
 
@@ -77,44 +77,63 @@
     const AWS_DEPLOYED_URL = "https://main.d3iovjyuh6mk6f.amplifyapp.com"
 
     // Handle login
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
+    async function login() {
       const email = document.getElementById("loginEmail").value;
       const password = document.getElementById("loginPassword").value;
 
-      const response = await fetch(`${AWS_DEPLOYED_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
+      try {
+        const response = await fetch(`${AWS_DEPLOYED_URL}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
 
-      const result = await response.json();
-      if (response.ok) {
-        localStorage.setItem("token", result.access_token);  // Save token in localStorage
-        window.location.href = "index.html";  // Redirect to main page
-      } else {
-        alert(result.detail || "Login Failed");
+        const result = await response.json();
+        if (response.ok) {
+          localStorage.setItem("token", result.access_token); // Save token in localStorage
+          window.location.href = "index.html"; // Redirect to main page
+        } else {
+          alert(result.detail || "Login Failed");
+        }
+      } catch (error) {
+        console.error("Error during login:", error);
+        alert("Something went wrong. Please try again.");
       }
-    });
+    }
 
-    // Handle registration
-    document.getElementById("registerForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
+
+    // Register function
+    async function register() {
       const email = document.getElementById("registerEmail").value;
       const password = document.getElementById("registerPassword").value;
 
-      const response = await fetch(`${AWS_DEPLOYED_URL}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
+      try {
+        const response = await fetch(`${AWS_DEPLOYED_URL}/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
 
-      const result = await response.json();
-      if (response.ok) {
-        alert("Registration successful! Please log in.");
-      } else {
-        alert(result.detail);
+        const result = await response.json();
+        if (response.ok) {
+          alert("Registration successful! Please log in.");
+        } else {
+          alert(result.detail || "Registration failed.");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+        alert("Something went wrong. Please try again.");
       }
+    }
+
+    // Attach event listeners to buttons
+    document.getElementById("loginButton").addEventListener("click", login);
+    document.getElementById("registerButton").addEventListener("click", register);
+
+    // Logout button (optional for clearing token)
+    document.getElementById("logoutButton").addEventListener("click", () => {
+      localStorage.removeItem("token");
+      alert("Logged out successfully!");
     });
   </script>
 </body>
