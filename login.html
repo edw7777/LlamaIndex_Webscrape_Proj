@@ -82,7 +82,7 @@
       const password = document.getElementById("loginPassword").value;
 
       try {
-        const response = await fetch(`${AWS_DEPLOYED_URL}/login`, {
+        const response = await fetch(`${API_BASE_URL}/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })
@@ -108,7 +108,7 @@
       const password = document.getElementById("registerPassword").value;
 
       try {
-        const response = await fetch(`${AWS_DEPLOYED_URL}/register`, {
+        const response = await fetch(`${API_BASE_URL}/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })
