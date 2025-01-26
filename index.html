@@ -94,7 +94,7 @@
   <script>
     //const API_BASE_URL = "http://127.0.0.1:8000"; Local testing
     //const API_BASE_URL = "http://54.152.221.121:8000"; HTTP backend
-    const API_BASE_URL = "https://llamaindexproject.duckdns.org";
+    const API_BASE_URL = "https://llamaindexproject.duckdns.org/api";
 
     // Check if the user is logged in
     const token = localStorage.getItem("token");
@@ -104,23 +104,23 @@
     }
 
     // Function to handle file uploads
-    async function uploadFile() {
-      const fileInput = document.getElementById("fileUpload");
-      if (!fileInput.files.length) {
-        alert("Please select a file.");
-        return;
-      }
+    //async function uploadFile() {
+    //  const fileInput = document.getElementById("fileUpload");
+    //  if (!fileInput.files.length) {
+    //    alert("Please select a file.");
+    //    return;
+    //  }
 
-      const formData = new FormData(); // Corrected variable name
-      formData.append("file", fileInput.files[0]);
+    //  const formData = new FormData(); // Corrected variable name
+    //  formData.append("file", fileInput.files[0]);
 
-      const response = await fetch(`${API_BASE_URL}/upload`, {
-        method: "POST",
-        body: formData,
-      });
-      const result = await response.json();
-      alert(result.message || "Upload failed.");
-    }
+    //  const response = await fetch(`${API_BASE_URL}/upload`, {
+    //    method: "POST",
+    //    body: formData,
+    //  });
+    //  const result = await response.json();
+    //  alert(result.message || "Upload failed.");
+    //}
 
     // Function to scrape website
     async function scrapeWebsite() {
