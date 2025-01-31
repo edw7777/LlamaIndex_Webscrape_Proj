@@ -68,8 +68,6 @@
     <button id="registerButton">Register</button>
 
     <p class="error" id="errorMessage"></p>
-
-    <button id="logoutButton">Logout</button>
   </div>
 
   <script>
@@ -131,11 +129,6 @@
     document.getElementById("loginButton").addEventListener("click", login);
     document.getElementById("registerButton").addEventListener("click", register);
 
-    // Logout button (optional for clearing token)
-    document.getElementById("logoutButton").addEventListener("click", () => {
-      localStorage.removeItem("token");
-      alert("Logged out successfully!");
-    });
   </script>
 </body>
 
