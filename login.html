@@ -7,105 +7,195 @@
   <title>Login & Register</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      background: linear-gradient(to right, #007bff, #0056b3);
-      font-family: 'Arial', sans-serif;
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+    /* Reset default margins and paddings */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
+    /* Centering content vertically and horizontally */
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #4070f4;
+      /* Primary blue background */
+    }
+
+    /* Flex container for Login & Register forms */
     .container {
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
+      gap: 20px;
+      width: 800px;
     }
 
+    /* Styling for form boxes */
     .form-box {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      padding: 34px;
+      border-radius: 6px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
       width: 350px;
+      transition: transform 0.4s ease;
+      position: relative;
     }
 
+    /* Styling for "Login" and "Registration" headers */
     .form-box h2 {
-      color: #007bff;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
-    .form-group label {
-      font-weight: bold;
+      font-size: 22px;
+      font-weight: 600;
       color: #333;
+      text-align: left;
+      /* Aligns header text to the left */
+      margin-bottom: 10px;
+      /* Adds space before the underline */
+      position: relative;
     }
 
-    .form-group input {
+    /* Adding a small blue underline below headers, aligned to the left */
+    .form-box h2::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      /* Positions the underline directly below the text */
+      left: 0;
+      /* Aligns the underline with the left-aligned header */
+      width: 40px;
+      /* Shorter width for better aesthetics */
+      height: 3px;
+      background: #4070f4;
+      border-radius: 12px;
+    }
+
+    /* Styling for input fields */
+    .input-box {
+      height: 52px;
+      margin: 18px 0;
+    }
+
+    /* Input fields appearance */
+    .input-box input {
+      height: 100%;
       width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      transition: 0.3s;
-    }
-
-    .form-group input:focus {
-      border-color: #007bff;
       outline: none;
+      padding: 0 15px;
+      font-size: 17px;
+      border: 1.5px solid #C7BEBE;
+      border-bottom-width: 2.5px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
     }
 
-    .btn {
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
+    /* Highlight input fields when focused */
+    .input-box input:focus {
+      border-color: #4070f4;
+    }
+
+    /* Styling for buttons */
+    .input-box.button input {
+      color: #fff;
       border: none;
-      border-radius: 4px;
+      background: #4070f4;
       cursor: pointer;
       transition: 0.3s;
     }
 
-    .btn:hover {
-      background-color: #0056b3;
+    /* Button hover effect */
+    .input-box.button input:hover {
+      background: #0e4bf1;
     }
 
-    .error-message {
-      color: red;
+    /* Styling for "I accept terms" section */
+    .policy {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Terms & conditions text */
+    .policy h3 {
+      color: #707070;
+      font-size: 14px;
+      font-weight: 500;
+      margin-left: 10px;
+    }
+
+    /* Centering "Already have an account?" text */
+    .text h3 {
+      color: #333;
       text-align: center;
-      margin-top: 10px;
+    }
+
+    /* Link styling inside text */
+    .text h3 a {
+      color: #4070f4;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* Link hover effect */
+    .text h3 a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        /* Stacks forms vertically */
+        align-items: center;
+      }
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <div class="form-box">
+    <!-- Login Section -->
+    <div class="form-box login">
       <h2>Login</h2>
-      <div class="form-group">
-        <label for="loginEmail">Email</label>
-        <input type="email" id="loginEmail" required>
-      </div>
-      <div class="form-group">
-        <label for="loginPassword">Password</label>
-        <input type="password" id="loginPassword" required>
-      </div>
-      <button id="loginButton" class="btn">Login</button>
+      <form id="loginForm">
+        <div class="input-box">
+          <input type="text" id="loginUsername" placeholder="Enter your username" required>
+        </div>
+        <div class="input-box">
+          <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        </div>
+        <div class="input-box button">
+          <input type="submit" value="Login">
+        </div>
+      </form>
     </div>
 
-    <div class="form-box ml-6">
+    <!-- Register Section -->
+    <div class="form-box register">
       <h2>Register</h2>
-      <div class="form-group">
-        <label for="registerEmail">Email</label>
-        <input type="email" id="registerEmail" required>
-      </div>
-      <div class="form-group">
-        <label for="registerPassword">Password</label>
-        <input type="password" id="registerPassword" required>
-      </div>
-      <button id="registerButton" class="btn">Register</button>
+      <form id="registerForm">
+        <div class="input-box">
+          <input type="text" id="registerName" placeholder="Enter your name" required>
+        </div>
+        <div class="input-box">
+          <input type="text" id="registerUsername" placeholder="Enter your username" required>
+        </div>
+        <div class="input-box">
+          <input type="password" id="registerPassword" placeholder="Create password" required>
+        </div>
+        <div class="policy">
+          <input type="checkbox" required>
+          <h3>I accept all terms & conditions</h3>
+        </div>
+        <div class="input-box button">
+          <input type="submit" value="Register Now">
+        </div>
+      </form>
     </div>
   </div>
+
 
   <script>
     //const API_BASE_URL = "http://127.0.0.1:8000"; //FastAPI server
@@ -113,58 +203,95 @@
     const API_BASE_URL = "https://llamaindexproject.duckdns.org/api";
 
     // Handle login
-    async function login() {
-      const email = document.getElementById("loginEmail").value;
+    document.getElementById("loginForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const username = document.getElementById("loginUsername").value.trim();
       const password = document.getElementById("loginPassword").value;
+
+      if (!validateUsername(username)) {
+        showError("Invalid username. Only letters and numbers allowed.", "login");
+        return;
+      }
 
       try {
         const response = await fetch(`${API_BASE_URL}/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ username, password })
         });
 
         const result = await response.json();
         if (response.ok) {
-          localStorage.setItem("token", result.access_token); // Save token in localStorage
-          window.location.href = "index.html"; // Redirect to main page
+          localStorage.setItem("token", result.access_token); // Save token
+          window.location.href = "index.html"; // Redirect after login
         } else {
-          alert(result.detail || "Login Failed");
+          showError(result.detail || "Login failed. Please try again.", "login");
         }
       } catch (error) {
-        console.error("Error during login:", error);
-        alert("Something went wrong. Please try again.");
+        showError("Network error. Please try again later.", "login");
       }
-    }
+    });
 
 
     // Register function
-    async function register() {
-      const email = document.getElementById("registerEmail").value;
+    document.getElementById("registerForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const name = document.getElementById("registerName").value;
+      const username = document.getElementById("registerUsername").value;
       const password = document.getElementById("registerPassword").value;
+
+      if (!validateUsername(username)) {
+        showError("Invalid username. Only letters and numbers allowed.", "register");
+        return;
+      }
+
+      if (!validateName(name)) {
+        showError("Invalid name. Only letters allowed.", "register");
+        return;
+      }
 
       try {
         const response = await fetch(`${API_BASE_URL}/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ name, username, password })
         });
 
         const result = await response.json();
         if (response.ok) {
           alert("Registration successful! Please log in.");
+          toggleForms(); // Switch to login form
         } else {
-          alert(result.detail || "Registration failed.");
+          showError(result.detail || "Registration failed.", "register");
         }
       } catch (error) {
-        console.error("Error during registration:", error);
-        alert("Something went wrong. Please try again.");
+        showError("Network error. Please try again later.", "register");
       }
+    });
+
+    function validateUsername(username) {
+      return /^[a-zA-Z0-9]+$/.test(username); // Allows only letters and numbers
+    }
+
+    function validateName(name) {
+      return /^[A-Za-z]+$/.test(name); // Allows only letters 
+    }
+
+    function showError(message, formType) {
+      const errorDiv = document.createElement("p");
+      errorDiv.classList.add("error-message");
+      errorDiv.style.color = "red";
+      errorDiv.textContent = message;
+
+      const formBox = document.querySelector(`.${formType}`);
+      formBox.appendChild(errorDiv);
+
+      setTimeout(() => errorDiv.remove(), 4000);
     }
 
     // Attach event listeners to buttons
-    document.getElementById("loginButton").addEventListener("click", login);
-    document.getElementById("registerButton").addEventListener("click", register);
+    //document.getElementById("loginButton").addEventListener("click", login);
+    //document.getElementById("registerButton").addEventListener("click", register);
 
   </script>
 </body>
