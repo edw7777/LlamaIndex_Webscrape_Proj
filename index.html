@@ -121,6 +121,10 @@
 
     <div class="response" id="response"></div>
 
+    <div id="loadingMessage" style="display: none; text-align: center; font-weight: bold; color: #007BFF;">
+      Loading... Please wait.
+    </div>
+
     <button id="logoutButton">Logout</button>
 
   </div>
@@ -163,14 +167,21 @@
         alert("Please enter a website URL.");
         return;
       }
+      showLoading(true);
 
-      const response = await fetch(`${API_BASE_URL}/scrape`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: websiteInput }),
-      });
-      const result = await response.json();
-      alert(result.message || "Scraping failed.");
+      try {
+        const response = await fetch(`${API_BASE_URL}/scrape`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: websiteInput }),
+        });
+        const result = await response.json();
+        alert(result.message || "Scraping failed.");
+      } catch (error) {
+        alert("An error occurred while scraping.");
+      } finally {
+        showLoading(false);
+      }
     }
 
     // Function to submit query
@@ -180,14 +191,26 @@
         alert("Please enter a question.");
         return;
       }
+      showLoading(true);
 
-      const response = await fetch(`${API_BASE_URL}/query`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: queryInput }),
-      });
-      const result = await response.json();
-      document.getElementById("response").innerText = result.response || "Query failed.";
+      try {
+        const response = await fetch(`${API_BASE_URL}/query`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: queryInput }),
+        });
+
+        const result = await response.json();
+        document.getElementById("response").innerText = result.response || "Query failed.";
+      } catch (error) {
+        document.getElementById("response").innerText = "An error occurred while querying.";
+      } finally {
+        showLoading(false); // Hide loading message
+      }
+    }
+
+    function showLoading(show) {
+      document.getElementById("loadingMessage").style.display = show ? "block" : "none";
     }
 
     //logout script
