@@ -131,11 +131,11 @@
     const API_BASE_URL = "https://llamaindexproject.duckdns.org/api";
 
     // Check if the user is logged in
-    //const token = localStorage.getItem("token");
-    //if (!token) {
-    //  alert("Please log in.");
-    //  window.location.href = "login.html"; // Redirect to login page
-    //}
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in.");
+      window.location.href = "login.html"; // Redirect to login page
+    }
 
     // Function to handle file uploads
     //async function uploadFile() {
