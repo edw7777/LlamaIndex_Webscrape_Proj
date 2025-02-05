@@ -260,7 +260,8 @@
         const result = await response.json();
         if (response.ok) {
           alert("Registration successful! Please log in.");
-          toggleForms(); // Switch to login form
+          localStorage.setItem("token", result.access_token); // Save token
+          window.location.href = "index.html"; // Redirect after login
         } else {
           showError(result.detail || "Registration failed.", "register");
         }
@@ -274,7 +275,7 @@
     }
 
     function validateName(name) {
-      return /^[A-Za-z]+$/.test(name); // Allows only letters 
+      return /^[A-Za-z\s]+$/.test(name); // Allows only letters 
     }
 
     function showError(message, formType) {
