@@ -6,16 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lecture Notes App</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      padding: 0;
-      background-color: #f9f9f9;
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+    /* styling for whole thing ex. text font*/
+    * {
+      margin: 0;
+      padding: 10px;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
-    h1 {
-      color: #333;
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #4070f4;
     }
+
 
     .container {
       max-width: 600px;
@@ -26,19 +34,34 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
+    /* Input group styling */
     .input-group {
-      margin-bottom: 20px;
+      margin: 0px 0;
+      text-align: left;
     }
 
-    input[type="file"],
-    input[type="text"] {
+    .input-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .input-group input {
       width: 100%;
-      padding: 10px;
-      margin: 5px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1.5px solid #C7BEBE;
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
     }
 
+    .input-group input:focus {
+      border-color: #4070f4;
+      outline: none;
+    }
+
+    /* Scrape and Question buttons*/
     button {
       padding: 10px 20px;
       background-color: #007BFF;
@@ -49,28 +72,39 @@
     }
 
     button:hover {
-      background-color: #0056b3;
+      background-color: #0e4bf1;
     }
 
+    /* Response box */
     .response {
-      margin-top: 20px;
+      margin-top: 15px;
       background: #e9ecef;
       padding: 10px;
       border-radius: 4px;
+    }
+
+    /*Logout button stuff*/
+    #logoutButton {
+      background-color: #dc3545;
+      margin-top: 15px;
+    }
+
+    #logoutButton:hover {
+      background-color: #b02a37;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>Lecture Notes App</h1>
+    <h2>LlamaIndex Demonstration Project</h2>
 
     <!-- File Upload Section -->
-    <div class="input-group">
+    <!--<div class="input-group">
       <label for="fileUpload">Upload a file</label>
       <input type="file" id="fileUpload">
       <button onclick="uploadFile()">Upload</button>
-    </div>
+    </div> -->
 
     <!-- HTML Input for Website URL -->
     <div class="input-group">
@@ -97,11 +131,11 @@
     const API_BASE_URL = "https://llamaindexproject.duckdns.org/api";
 
     // Check if the user is logged in
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Please log in.");
-      window.location.href = "login.html"; // Redirect to login page
-    }
+    //const token = localStorage.getItem("token");
+    //if (!token) {
+    //  alert("Please log in.");
+    //  window.location.href = "login.html"; // Redirect to login page
+    //}
 
     // Function to handle file uploads
     //async function uploadFile() {
