@@ -100,11 +100,11 @@
     <h2>LlamaIndex Demonstration Project</h2>
 
     <!-- File Upload Section -->
-    <!--<div class="input-group">
-      <label for="fileUpload">Upload a file</label>
-      <input type="file" id="fileUpload">
-      <button onclick="uploadFile()">Upload</button>
-    </div> -->
+    <div class="input-group">
+      <label for="fileUpload">Upload a PDF</label>
+      <input type="file" id="fileUpload" accept=".pdf">
+      <button onclick="uploadPDF()">Upload</button>
+    </div>
 
     <!-- HTML Input for Website URL -->
     <div class="input-group">
@@ -142,23 +142,28 @@
     }
 
     // Function to handle file uploads
-    //async function uploadFile() {
-    //  const fileInput = document.getElementById("fileUpload");
-    //  if (!fileInput.files.length) {
-    //    alert("Please select a file.");
-    //    return;
-    //  }
+    async function uploadFile() {
+      const fileInput = document.getElementById("fileUpload");
+      if (!fileInput.files.length) {
+        alert("Please select a file.");
+        return;
+      }
 
-    //  const formData = new FormData(); // Corrected variable name
-    //  formData.append("file", fileInput.files[0]);
+      const formData = new FormData(); // Corrected variable name
+      formData.append("file", fileInput.files[0]);
 
-    //  const response = await fetch(`${API_BASE_URL}/upload`, {
-    //    method: "POST",
-    //    body: formData,
-    //  });
-    //  const result = await response.json();
-    //  alert(result.message || "Upload failed.");
-    //}
+      try {
+        const response = await fetch(`${API_BASE_URL}/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+        alert(result.message || "Upload failed.");
+      } catch (error) {
+        alert("Error uploading PDF. Please try again.");
+      }
+    }
 
     // Function to scrape website
     async function scrapeWebsite() {
